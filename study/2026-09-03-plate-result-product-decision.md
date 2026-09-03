@@ -1,8 +1,9 @@
 # PlateResult 상태 모델 Product Decision
 
 - 작성일: 2026-09-03
-- 관련 Issue: #9
-- 상태: 제안 — 사용자 승인 대기
+- 관련 Issue: #9, #11
+- 상태: 확정됨
+- 사용자 승인일: 2026-09-03
 - 범위: TATATA MVP 1의 문장 타석 종료와 `PlateResult` 상태 의미
 
 ## 문제
@@ -23,6 +24,12 @@
 - 3 OUT이면 현재 이닝이 종료되고, 다음 이닝 시작 시 OUT은 0으로 초기화된다.
 - 마지막 이닝 종료 시 Game Complete가 된다.
 - 핵심 학습 루프는 `단어 학습 → 문장 타이핑 → 타석 결과 → 문법 복습 → 다음 타석 → 3 OUT → 이닝 결과`다.
+- 문장 제출 1회는 공식 타석 1회를 종료한다.
+- `STRIKE`, `OUT`, `SINGLE`, `DOUBLE`, `TRIPLE`, `HOME_RUN`은 모두 해당 공식 타석의 최종 `PlateResult`다.
+- `STRIKE`는 타석 내부 누적 상태가 아니며 `strikeCount`, STRIKE 누적, 3 STRIKE OUT 및 동일 문장 즉시 재입력을 MVP 1에 포함하지 않는다.
+- 각 결과 이후에는 문법 복습으로 이동한다.
+- `OUT`만 `outCount`를 1 증가시키며 `outCount === 3`이면 현재 이닝 종료 조건이 충족된다.
+- `SINGLE`, `DOUBLE`, `TRIPLE`, `HOME_RUN`은 `hit` 계열이고 `STRIKE`는 outCount를 증가시키지 않는 `non-hit`이다.
 
 ### 현재 구현됨
 
@@ -37,10 +44,9 @@
 
 ### 미결정
 
-- `STRIKE`가 최종 `PlateResult`인지 타석 내부 누적 상태인지
-- `STRIKE` 이후의 다음 화면과 동일 문장 재시도 여부
-- `STRIKE`와 `OUT`이 `outCount` 및 시즌 기록에서 갖는 의미
 - 시즌 타율의 구체적인 계산 공식
+- `STRIKE`가 시즌 타율에서 갖는 구체적인 계산 의미
+- 결과별 production 판정 알고리즘과 threshold
 
 ## 대안
 
@@ -67,6 +73,8 @@
 - MVP 범위: 현재 Source of Truth에 없는 상태와 정책을 새로 결정해야 하므로 범위가 증가한다.
 
 ## 전문가 검토
+
+아래 내용은 사용자 승인 전에 Option A를 도출한 검토 기록이며, 당시의 `제안` 표기를 의사결정 과정으로 보존한다. 현재 Product Decision의 상태는 문서 상단과 `결정` 섹션에 기록된 `확정됨`을 따른다.
 
 ### Agent A — AI Product Lead
 
@@ -100,11 +108,11 @@ Option B는 실제 야구의 누적 스트라이크 메타포와 동일 문장 �
 
 ## 결정
 
-**제안 — 사용자 승인 대기:** 문장 제출 1회는 공식 타석 1회를 종료하며, `STRIKE`, `OUT`, `SINGLE`, `DOUBLE`, `TRIPLE`, `HOME_RUN`은 모두 해당 타석의 최종 `PlateResult`다. `STRIKE` 이후에는 문법 복습으로 이동하고 `strikeCount`는 만들지 않는다. `OUT`만 `outCount`를 1 증가시키며 `SINGLE`, `DOUBLE`, `TRIPLE`, `HOME_RUN`은 모두 `hit` 계열로 분류한다.
+**확정됨:** 문장 제출 1회는 공식 타석 1회를 종료하며, `STRIKE`, `OUT`, `SINGLE`, `DOUBLE`, `TRIPLE`, `HOME_RUN`은 모두 해당 타석의 최종 `PlateResult`다. `STRIKE` 이후에는 문법 복습으로 이동하고 `strikeCount`는 만들지 않는다. `OUT`만 `outCount`를 1 증가시키며 `SINGLE`, `DOUBLE`, `TRIPLE`, `HOME_RUN`은 모두 `hit` 계열로 분류한다.
 
-사용자의 명시적 승인 전까지 위 문장은 production 비즈니스 규칙으로 확정하지 않는다.
+사용자가 2026-09-03에 위 상태 의미와 기본 상태 전이를 TATATA MVP 1의 제품 규칙으로 명시적으로 승인했다.
 
-## 상태 전이 제안
+## 확정된 상태 전이
 
 | 현재 행동 | PlateResult | 타석 종료 | 다음 단계 | outCount 변화 | 결과 분류 |
 |---|---|---:|---|---:|---|
@@ -120,19 +128,19 @@ Option B는 실제 야구의 누적 스트라이크 메타포와 동일 문장 �
 ## 필수 질문 답변
 
 1. **Q1 — 문장 한 번 제출은 하나의 공식 타석을 종료하는가?**
-   **제안:** 그렇다. 제출 1회가 공식 타석 1회를 종료한다.
+   **확정됨:** 그렇다. 제출 1회가 공식 타석 1회를 종료한다.
 2. **Q2 — STRIKE는 최종 PlateResult인가, 타석 내부 상태인가?**
-   **제안:** 최종 `PlateResult`다. 타석 내부 상태나 누적 카운트가 아니다.
+   **확정됨:** 최종 `PlateResult`다. 타석 내부 상태나 누적 카운트가 아니다.
 3. **Q3 — STRIKE가 발생했을 때 다음 화면은 무엇인가?**
-   **제안:** 타석 결과를 확인한 뒤 문법 복습으로 이동한다. 같은 문장 즉시 재시도는 하지 않는다.
+   **확정됨:** 타석 결과를 확인한 뒤 문법 복습으로 이동한다. 같은 문장 즉시 재시도는 하지 않는다.
 4. **Q4 — STRIKE는 outCount를 증가시키는가?**
-   **제안:** 증가시키지 않는다.
+   **확정됨:** 증가시키지 않는다.
 5. **Q5 — OUT만 outCount + 1을 발생시키는가?**
-   **제안:** 그렇다. 현재 결과 집합에서는 `OUT`만 증가시킨다.
+   **확정됨:** 그렇다. 현재 결과 집합에서는 `OUT`만 증가시킨다.
 6. **Q6 — SINGLE / DOUBLE / TRIPLE / HOME_RUN은 모두 hit로 취급하는가?**
-   **제안:** 그렇다. 네 결과를 모두 `hit` 계열로 분류한다.
+   **확정됨:** 그렇다. 네 결과를 모두 `hit` 계열로 분류한다.
 7. **Q7 — 현재 결정만으로 다음 Plate Result fixture UI를 구현할 수 있는가?**
-   **제안:** 사용자가 이 결정을 승인하면 가능하다. fixture는 여섯 결과, 결과 근거, 타석 종료, 문법 복습 CTA, OUT일 때의 outCount 표시를 표현할 수 있다. production 판정식은 구현할 수 없다.
+   **확정됨:** 가능하다. fixture는 여섯 결과, 결과 근거, 타석 종료, 문법 복습 CTA, OUT일 때의 outCount 표시를 표현할 수 있다. production 판정식은 구현할 수 없다.
 8. **Q8 — 여전히 별도 Product Decision이 필요한 사항은 무엇인가?**
    **미결정:** 판정 threshold와 공식, 신규 사용자 속도 baseline, 시즌 타율 계산식, 콘텐츠 정답·대소문자·문장부호·오타 정책, 반복 학습 정책, 베이스·주자·타점·득점 규칙이다.
 
@@ -166,7 +174,7 @@ Option B는 실제 야구의 누적 스트라이크 메타포와 동일 문장 �
 
 ## 구현 영향
 
-사용자 승인 후 다음 Plate Result fixture UI Issue에서는 아래 범위를 구현할 수 있다.
+다음 Plate Result fixture UI Issue에서는 아래 범위를 구현할 수 있다.
 
 - `STRIKE | OUT | SINGLE | DOUBLE | TRIPLE | HOME_RUN` 결과 fixture
 - 모든 결과를 타석 종료 상태로 표시
@@ -192,16 +200,26 @@ Option B는 실제 야구의 누적 스트라이크 메타포와 동일 문장 �
 - threshold, baseline, 판정식 및 실제 야구 확장 규칙이 결정된 값으로 추가되지 않았는지 확인한다.
 - 변경 파일이 이 Product Decision 문서 하나뿐인지 확인한다.
 - `git diff --check`를 실행한다.
-- Issue #9의 작업 commit이 정확히 하나인지 확인한다.
+- Issue #11의 작업 commit이 정확히 하나인지 확인한다.
+
+## UX 검증 사항
+
+STRIKE는 실제 야구에서 누적 상태로 이해되는 경우가 일반적이므로, 사용자가 TATATA의 최종 결과 상태를 같은 의미로 받아들이지 못할 가능성이 있다. 이 위험은 승인된 Product Decision을 미결정으로 되돌리지 않으며, 향후 PlateResult UI 사용성 검증에서 다음을 확인한다.
+
+1. 사용자가 현재 `PlateResult`를 즉시 식별하는가
+2. `accuracy`, `relative typing speed`, `difficulty`를 근거로 결과 이유를 이해하는가
+3. 다음 행동이 동일 문장 재입력이 아니라 문법 복습임을 이해하는가
+
+STRIKE 명칭의 실제 사용자 이해도는 **검증되지 않음**이며, production 상태 규칙과 구분한다.
 
 ## 미결정 사항
 
-- 이 문서의 제안을 MVP 1 제품 규칙으로 승인할지 여부
 - STRIKE가 시즌 타율 계산에서 어떤 분모·분자 의미를 갖는지
 - 시즌 타율의 공식과 hit 분류를 기록에 반영하는 방식
 - 결과별 판정 threshold, 상대 속도 계산과 난이도 보정 공식
 - 신규 사용자 baseline speed 생성 방식
-- HOME_RUN 발생 조건 또는 확률
+- HOME_RUN 발생 조건, 희소성 또는 확률
+- 각 결과를 결정하는 production 판정 알고리즘
 - 콘텐츠별 정답, 대소문자, 문장부호와 오타 허용 정책
 - 향후 같은 문장 반복 학습이 필요한지와 그 진입·종료 규칙
 - 베이스, 주자, 타점, 득점 등 MVP 밖 야구 상태
@@ -215,5 +233,7 @@ Option B는 실제 야구의 누적 스트라이크 메타포와 동일 문장 �
 - `study/2026-09-03-frontend-foundation.md`
 - `README.md`
 - `origin/main`의 PR #6 및 PR #8 병합 이력
+- PR #10의 병합 및 Issue #9의 완료 상태
+- 2026-09-03 사용자의 PlateResult Product Decision 명시적 승인
 
 기존 문서에서 STRIKE의 다섯 세부 규칙과 직접 충돌하는 확정 규칙은 발견하지 못했다. 충돌은 확정 규칙 간의 모순이 아니라, `STRIKE`가 결과 후보로 존재하면서 그 상태 의미가 비어 있는 명세 공백이다.
