@@ -4,7 +4,7 @@ TATATA는 야구의 경기와 시즌 기록 비유를 활용한 한국어권 영
 
 ## 현재 저장소 상태
 
-현재 저장소에는 애플리케이션 기술 스택과 실행 환경이 아직 구성되어 있지 않습니다. 프레임워크, package manager, routing, state management, lint, test, build 명령은 이후 구현 Issue에서 명시적으로 결정하고 추가해야 합니다.
+Frontend 개발 기반은 `frontend/`에 React, TypeScript, Vite, npm으로 구성되어 있습니다. Backend는 아직 구성하지 않았습니다.
 
 ## 개발 시작 전 확인
 
@@ -21,7 +21,21 @@ TATATA는 야구의 경기와 시즌 기록 비유를 활용한 한국어권 영
 
 ## 개발 명령
 
-아직 애플리케이션 환경이 구성되지 않아 실행, lint, test, build 명령이 없습니다. 명령이 추가되면 실제 설정 파일을 기준으로 이 문서를 갱신합니다.
+Frontend dependency를 설치하고 각 명령을 실행합니다.
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+개발 서버 외의 검증 명령은 다음과 같습니다.
+
+```powershell
+npm run lint
+npm test
+npm run build
+```
 
 ## 제품 및 브랜드 원칙
 
