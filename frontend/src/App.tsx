@@ -1,9 +1,12 @@
+import { PlateResultScreen } from './features/plate-result/PlateResultScreen'
+import { plateResultFixtures } from './features/plate-result/fixtures'
+
 function App() {
   return (
-    <main>
-      <h1>TATATA</h1>
-      <p>Frontend 개발 기반이 정상적으로 동작하고 있습니다.</p>
-    </main>
+    <PlateResultScreen
+      fixture={plateResultFixtures.DOUBLE}
+      onReviewGrammar={() => undefined}
+    />
   )
 }
 
