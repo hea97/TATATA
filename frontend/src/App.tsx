@@ -1,4 +1,5 @@
-import { SentenceAtBatFlow } from './features/sentence-at-bat/SentenceAtBatFlow'
+import { grammarReviewFixture } from './features/grammar-review/fixtures'
+import { AtBatLearningFlow } from './features/learning/AtBatLearningFlow'
 import {
   gameContextSnapshotFixture,
   sentenceAtBatSubmissionOutcomeFixture,
@@ -7,11 +8,12 @@ import {
 
 function App() {
   return (
-    <SentenceAtBatFlow
-      initialState={typingSentenceAtBatFixture}
+    <AtBatLearningFlow
+      initialAtBatState={typingSentenceAtBatFixture}
       submissionOutcome={sentenceAtBatSubmissionOutcomeFixture}
       gameContext={gameContextSnapshotFixture}
-      onReviewGrammar={() => undefined}
+      grammarReviewContent={grammarReviewFixture}
+      onContinue={() => undefined}
     />
   )
 }

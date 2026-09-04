@@ -1,0 +1,262 @@
+.page {
+  --navy: #15233f;
+  --red: #b83a35;
+  --paper: #fffdf8;
+  --line: #d8d2c5;
+  display: grid;
+  min-height: 100vh;
+  padding: 48px 24px;
+  place-items: center;
+  background: linear-gradient(rgba(21, 35, 63, 0.035) 1px, transparent 1px), #f2efe8;
+  background-size: 100% 32px;
+}
+
+.review {
+  width: min(100%, 760px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--navy);
+  background: var(--paper);
+  box-shadow: 0 22px 60px rgba(21, 35, 63, 0.12);
+}
+
+.header,
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 32px;
+}
+
+.header {
+  border-bottom: 1px solid var(--line);
+}
+
+.brand,
+.eyebrow,
+.step,
+.nextLabel {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.brand,
+.step,
+.nextLabel,
+.sectionNumber {
+  color: var(--red);
+}
+
+.eyebrow {
+  margin-top: 6px;
+  color: #6c7280;
+  letter-spacing: 0.08em;
+}
+
+.practiceNote {
+  margin: 0;
+  color: #6c7280;
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.content {
+  padding: 0 32px 36px;
+}
+
+.sentenceSection {
+  padding: 44px 0 36px;
+}
+
+.sentenceSection h1 {
+  margin: 8px 0 24px;
+  color: var(--navy);
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+}
+
+.sentence {
+  margin: 0;
+  padding: 24px;
+  border-left: 5px solid var(--red);
+  background: #faf7f0;
+  color: var(--navy);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  font-weight: 700;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.patternSection {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  padding: 30px 0;
+  border-block: 1px solid var(--line);
+}
+
+.sectionNumber {
+  margin: 3px 0 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.patternSection h2,
+.sectionHeading h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 1rem;
+}
+
+.patternName {
+  margin: 12px 0 8px;
+  color: var(--navy);
+  font-size: 1.35rem;
+  font-weight: 850;
+}
+
+.explanation {
+  margin: 0;
+  color: #505865;
+  line-height: 1.75;
+}
+
+.detailSection {
+  padding-top: 30px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.vocabularyList {
+  margin: 18px 0 0;
+}
+
+.vocabularyList div {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.25fr) 1fr;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: #faf7f0;
+}
+
+.vocabularyList dt {
+  color: var(--red);
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.vocabularyList dd {
+  margin: 0;
+  color: #505865;
+  line-height: 1.65;
+}
+
+.exampleList {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.exampleList li {
+  position: relative;
+  padding: 14px 18px 14px 42px;
+  border-bottom: 1px solid var(--line);
+  color: var(--navy);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.exampleList li::before {
+  position: absolute;
+  left: 16px;
+  color: var(--red);
+  content: '•';
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  background: #faf7f0;
+}
+
+.footer p:last-child {
+  margin: 7px 0 0;
+  color: #5f6673;
+  font-size: 0.9rem;
+}
+
+.footer button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 52px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 2px;
+  color: #fff;
+  background: var(--red);
+  box-shadow: 4px 4px 0 var(--navy);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.footer button:hover {
+  background: #9e2f2b;
+}
+
+.footer button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--navy);
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 20px 12px;
+  }
+
+  .header,
+  .footer,
+  .content {
+    padding-inline: 20px;
+  }
+
+  .header {
+    align-items: flex-start;
+  }
+
+  .practiceNote {
+    max-width: 130px;
+  }
+
+  .sentenceSection {
+    padding-top: 36px;
+  }
+
+  .sentence {
+    padding: 20px 16px;
+  }
+
+  .vocabularyList div {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .footer button {
+    width: 100%;
+  }
+}
