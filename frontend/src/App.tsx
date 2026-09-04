@@ -1,10 +1,16 @@
-import { PlateResultScreen } from './features/plate-result/PlateResultScreen'
-import { plateResultFixtures } from './features/plate-result/fixtures'
+import { SentenceAtBatFlow } from './features/sentence-at-bat/SentenceAtBatFlow'
+import {
+  gameContextSnapshotFixture,
+  sentenceAtBatSubmissionOutcomeFixture,
+  typingSentenceAtBatFixture,
+} from './features/sentence-at-bat/fixtures'
 
 function App() {
   return (
-    <PlateResultScreen
-      fixture={plateResultFixtures.DOUBLE}
+    <SentenceAtBatFlow
+      initialState={typingSentenceAtBatFixture}
+      submissionOutcome={sentenceAtBatSubmissionOutcomeFixture}
+      gameContext={gameContextSnapshotFixture}
       onReviewGrammar={() => undefined}
     />
   )

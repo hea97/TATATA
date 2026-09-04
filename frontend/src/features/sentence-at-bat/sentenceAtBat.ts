@@ -19,6 +19,11 @@ export interface SentenceAtBatSubmittedState {
   result: PlateResult
 }
 
+export type SentenceAtBatSubmissionOutcome = Pick<
+  SentenceAtBatSubmittedState,
+  'measurement' | 'result'
+>
+
 export type SentenceAtBatState =
   | SentenceAtBatTypingState
   | SentenceAtBatSubmittedState
