@@ -3,15 +3,14 @@ import { describe, expect, it } from 'vitest'
 import App from './App'
 
 describe('App', () => {
-  it('renders the plate result preview', () => {
+  it('starts with the sentence at-bat screen', () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: '2루타' })).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: '문법 복습하기' }),
+      screen.getByRole('heading', { name: '영어 문장을 입력해보세요' }),
     ).toBeInTheDocument()
     expect(
-      screen.queryByText('Frontend 개발 기반이 정상적으로 동작하고 있습니다.'),
-    ).not.toBeInTheDocument()
+      screen.getByRole('button', { name: '제출하기' }),
+    ).toBeInTheDocument()
   })
 })
