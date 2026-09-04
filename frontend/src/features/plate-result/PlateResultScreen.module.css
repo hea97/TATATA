@@ -1,0 +1,235 @@
+.page {
+  --navy: #15233f;
+  --red: #b83a35;
+  --paper: #fffdf8;
+  --line: #d8d2c5;
+  display: grid;
+  min-height: 100vh;
+  padding: 48px 24px;
+  place-items: center;
+  background:
+    linear-gradient(rgba(21, 35, 63, 0.035) 1px, transparent 1px),
+    #f2efe8;
+  background-size: 100% 32px;
+}
+
+.scorecard {
+  width: min(100%, 760px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--navy);
+  background: var(--paper);
+  box-shadow: 0 22px 60px rgba(21, 35, 63, 0.12);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand,
+.eyebrow,
+.resultCaption,
+.nextLabel {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.brand {
+  color: var(--red);
+}
+
+.eyebrow {
+  margin-top: 6px;
+  color: #6c7280;
+  letter-spacing: 0.08em;
+}
+
+.gameContext {
+  display: flex;
+  gap: 24px;
+  margin: 0;
+}
+
+.gameContext div {
+  min-width: 64px;
+  text-align: right;
+}
+
+.gameContext dt {
+  color: #777b84;
+  font-size: 0.75rem;
+}
+
+.gameContext dd {
+  margin: 4px 0 0;
+  color: var(--navy);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.result {
+  padding: 56px 32px 48px;
+  text-align: center;
+}
+
+.resultCaption {
+  color: var(--red);
+}
+
+.result h1 {
+  display: inline-block;
+  margin: 14px 0 16px;
+  padding: 2px 22px 7px;
+  border: 4px double var(--red);
+  color: var(--red);
+  font-size: clamp(3rem, 9vw, 5.75rem);
+  line-height: 1;
+  letter-spacing: -0.07em;
+  transform: rotate(-1deg);
+}
+
+.resultGuide {
+  margin: 0;
+  color: #5f6673;
+  font-size: 1rem;
+}
+
+.metrics {
+  padding: 32px;
+  border-top: 1px solid var(--line);
+  background: #faf7f0;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.sectionNumber {
+  margin: 2px 0 0;
+  color: var(--red);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 1.15rem;
+}
+
+.sectionHeading p:last-child {
+  margin: 6px 0 0;
+  color: #6c7280;
+  font-size: 0.88rem;
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0 0;
+}
+
+.metricCard {
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.metricCard dt {
+  color: #6c7280;
+  font-size: 0.82rem;
+}
+
+.metricCard dd {
+  margin: 8px 0 0;
+  color: var(--navy);
+  font-size: 2rem;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+}
+
+.nextStep {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 32px 32px;
+  border-top: 1px solid var(--line);
+}
+
+.nextLabel {
+  color: var(--red);
+}
+
+.nextCopy {
+  margin: 7px 0 0;
+  color: #5f6673;
+  font-size: 0.9rem;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 52px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 2px;
+  color: #fff;
+  background: var(--red);
+  box-shadow: 4px 4px 0 var(--navy);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.primaryButton:hover {
+  background: #9e2f2b;
+}
+
+.primaryButton:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--navy);
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 20px 12px;
+  }
+
+  .header,
+  .nextStep {
+    padding-inline: 20px;
+  }
+
+  .result {
+    padding: 44px 20px 40px;
+  }
+
+  .metrics {
+    padding: 28px 20px;
+  }
+
+  .metricGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .nextStep {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primaryButton {
+    width: 100%;
+  }
+}
